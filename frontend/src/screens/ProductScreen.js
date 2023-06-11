@@ -77,18 +77,17 @@ const ProductScreen = ({ history, match }) => {
                   <Row>
                     <Col>Status:</Col>
                     <Col>
-                      {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
+                      {product.countInStock > 1 ? "In Stock" : "Out Of Stock"}
                     </Col>
                   </Row>
                 </ListGroup.Item>
 
-                {product.countInStock > 0 && (
+                {product.countInStock > 1 && (
                   <ListGroup.Item>
                     <Row>
                       <Col>Qty</Col>
                       <Col>
-                        <Form.Control
-                          as="select"
+                        <Form.Select
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
                         >
@@ -97,7 +96,7 @@ const ProductScreen = ({ history, match }) => {
                               {x + 1}
                             </option>
                           ))}
-                        </Form.Control>
+                        </Form.Select>
                       </Col>
                     </Row>
                   </ListGroup.Item>
