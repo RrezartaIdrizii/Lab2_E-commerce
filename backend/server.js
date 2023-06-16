@@ -9,6 +9,9 @@ import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import mysql from "mysql";
+
+
 
 dotenv.config();
 
@@ -21,6 +24,34 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(express.json());
+
+// MYSQL
+// MySQL configuration
+const db = mysql.createConnection({
+  host: process.env['127.0.0.1'],
+  user: process.env['root'],
+  password: process.env['root'],
+  database: process.env['e_commerce_lab2'],
+});
+
+
+db.connect((err) => {
+  if (err) {
+    console.error("Error connecting to MySQL database:", err);
+  } else {
+    console.log("Connected to MySQL database");
+  }
+});
+
+// Set the database connection in the request object
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
+
+//Fundi i MySql
+
+
 
 app.get("/", (req, res) => {
   res.send("API is running...");
@@ -49,3 +80,6 @@ app.listen(
     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
   )
 );
+
+
+

@@ -33,6 +33,8 @@ import {
   orderDeliverReducer,
 } from "./reducers/orderReducers";
 
+
+
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
@@ -84,5 +86,6 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
+
 
 export default store;
