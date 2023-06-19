@@ -1,7 +1,7 @@
 // import connection
 import mysqlConnection from "../config/dbconnect.js";
 
-// insert Bill Details
+// insert Form Details
 export const insertFormDetails = (data, result) => {
   mysqlConnection.query("INSERT INTO contacts SET ?", data, (err, results) => {
     if (err) {
@@ -13,7 +13,7 @@ export const insertFormDetails = (data, result) => {
   });
 };
 
-// get Bill Details
+// get Form Details
 export const getFormDetails = (id, result) => {
   mysqlConnection.query("SELECT * FROM contacts", id, (err, results) => {
     if (err) {

@@ -1,6 +1,6 @@
 import { insertFormDetails, getFormDetails } from "../models/contactModel.js";
 
-// create BillDetails
+// create FormDetails
 export const createFormDetails = (req, res) => {
   const data = req.body;
   insertFormDetails(data, (err, results) => {
@@ -12,7 +12,7 @@ export const createFormDetails = (req, res) => {
   });
 };
 
-// get BillDetails
+// get FormDetails
 export const getFormById = (req, res) => {
   getFormDetails(req.params.id, (err, results) => {
     if (err) {

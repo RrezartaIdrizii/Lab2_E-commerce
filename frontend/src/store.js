@@ -34,6 +34,8 @@ import {
 } from "./reducers/orderReducers";
 import { FormCreateReducer } from "./reducers/contactReducers";
 
+
+
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
@@ -86,5 +88,6 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
+
 
 export default store;
