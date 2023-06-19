@@ -8,6 +8,7 @@ import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import ContactScreen from "./screens/ContactScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/order/:id" component={OrderScreen} />
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
+          <Route path="/contact" component={ContactScreen} />
           <Route path="/profile" component={ProfileScreen} />
           <Route path="/shipping" component={ShippingScreen} />
           <Route path="/payment" component={PaymentScreen} />
