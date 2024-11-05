@@ -9,14 +9,12 @@ import Paginate from "../components/Paginate";
 import ProductSlider from "../components/ProductSlider";
 import Meta from "../components/Meta";
 import { listProducts } from "../actions/productActions";
+import ChatComponent from "../components/ChatComponent";
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
-
   const pageNumber = match.params.pageNumber || 1;
-
   const dispatch = useDispatch();
-
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
 
@@ -34,7 +32,7 @@ const HomeScreen = ({ match }) => {
           Go Back
         </Link>
       )}
-      <br></br>
+      <br />
       <h1 style={{ textAlign: "center" }}>Latest Products</h1>
       {loading ? (
         <Loader />
@@ -45,18 +43,15 @@ const HomeScreen = ({ match }) => {
           <Row>
             {products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <br></br>
+                <br />
                 <Product product={product} />
               </Col>
             ))}
           </Row>
-          <Paginate
-            pages={pages}
-            page={page}
-            keyword={keyword ? keyword : ""}
-          />
+          <Paginate pages={pages} page={page} keyword={keyword ? keyword : ""} />
         </>
       )}
+      <ChatComponent />
     </>
   );
 };

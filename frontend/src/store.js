@@ -32,7 +32,12 @@ import {
   orderListReducer,
   orderDeliverReducer,
 } from "./reducers/orderReducers";
-import { FormCreateReducer } from "./reducers/contactReducers";
+import { FormCreateReducer,
+  contactListReducer,
+  contactUpdateReducer,
+  contactDeleteReducer,
+  contactDetailsReducer,
+ } from "./reducers/contactReducers";
 
 
 
@@ -58,7 +63,11 @@ const reducer = combineReducers({
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
+  contactList: contactListReducer,
+  contactDelete: contactDeleteReducer,
+  contactUpdate: contactUpdateReducer,
   formCreate: FormCreateReducer,
+  contactDetails: contactDetailsReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

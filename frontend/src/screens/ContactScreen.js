@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Form, Button, Row, FormGroup, FormLabel } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 
@@ -7,40 +6,62 @@ const ContactScreen = ({ history }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [text, setText] = useState("");
+  const [error, setError] = useState(""); 
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const submitHandler = () => {
-    if (name.length === 0) {
-      alert("Name has left Blank!");
-    } else if (email.length === 0) {
-      alert("Email has left Blank!");
-    } else if (text.length === 0) {
-      alert("Text has left Blank!");
-    } else {
-      let fData = new FormData();
-      fData.append("name", name);
-      fData.append("email", email);
-      fData.append("text", text);
-      axios
-        .post("/api/contact", fData)
-        .then((response) => alert(response.data))
-        .catch((error) => alert(error));
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const contactData = {
+      name: name, 
+      email: email,
+      message: text, 
+    };
+
+    try {
+      const response = await fetch('/api/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json(); 
+        throw new Error(errorData.message || 'Error submitting form'); 
+      }
+
+      
+      setName('');
+      setEmail('');
+      setText('');
+      setSuccessMessage('Your contact form submitted successfully!');
+      setError(''); 
+    } catch (error) {
+      console.error('Error submitting form:', error.message); 
+      setError(error.message); 
+      setSuccessMessage(''); 
     }
   };
 
   return (
     <FormContainer>
       <h1>Contact Us</h1>
-      <Form onSubmit={submitHandler}>
+      {error && <p style={{ color: "red" }}>{error}</p>} 
+      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+      <Form onSubmit={handleSubmit}>
         <FormGroup controlId="name">
           <FormLabel>Name</FormLabel>
           <Form.Control
-            type="name"
+            type="text"
             placeholder="Enter Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-        <br></br>
+        <br />
         <FormGroup controlId="email">
           <FormLabel>Email</FormLabel>
           <Form.Control
@@ -48,19 +69,19 @@ const ContactScreen = ({ history }) => {
             placeholder="Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-        <br></br>
+        <br />
         <FormGroup controlId="text">
-          <FormLabel>Text</FormLabel>
+          <FormLabel>Message</FormLabel>
           <Form.Control
-            type="text"
-            placeholder="Enter Text"
+            as="textarea"
+            placeholder="Enter Message"
             value={text}
             onChange={(e) => setText(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-        <br></br>
+        <br />
         <Button type="submit" variant="primary">
           Submit
         </Button>
