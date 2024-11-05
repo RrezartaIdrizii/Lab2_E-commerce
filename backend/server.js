@@ -13,7 +13,6 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import http from 'http';
 import { initWebSocketServer } from './socket/chatServer.js';
-import path from 'path'; 
 
 dotenv.config();
 
