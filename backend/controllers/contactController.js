@@ -51,6 +51,9 @@ export const editContact = async (req, res) => {
 
   try {
     const updatedContact = await updateFormDetails(contactId, contactData);
+    if (!updatedContact) {
+      return res.status(404).json({ message: "Contact not found" });
+    }
     res.json(updatedContact);
   } catch (error) {
     console.error("Error updating contact:", error);
@@ -66,6 +69,7 @@ export const deleteContact = async (req, res) => {
     }
     res.json({ message: 'Contact removed' });
   } catch (error) {
+    console.error("Error deleting contact:", error);
     res.status(500).json({ message: error.message });
   }
 };

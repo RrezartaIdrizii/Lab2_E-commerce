@@ -18,12 +18,17 @@ const ContactScreen = ({ history }) => {
       email: email,
       message: text, 
     };
-
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("You must be logged in to submit the form.");
+      return; 
+    }
     try {
       const response = await fetch('/api/contacts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, 
         },
         body: JSON.stringify(contactData),
       });

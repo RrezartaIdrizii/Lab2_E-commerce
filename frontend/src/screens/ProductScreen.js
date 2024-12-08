@@ -8,7 +8,7 @@ import {
   Button,
   Form,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Rating from "../components/Rating";
 import Message from "../components/Message";
@@ -20,12 +20,14 @@ import {
 } from "../actions/productActions";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
 
-const ProductScreen = ({ history, match }) => {
+const ProductScreen = () => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { id } = useParams(); // Using useParams to get the product ID
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
@@ -44,17 +46,17 @@ const ProductScreen = ({ history, match }) => {
       setComment("");
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match, successProductReview]);
+    dispatch(listProductDetails(id)); // Using the product ID from URL
+  }, [dispatch, id, successProductReview]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    history.push(`/cart/${id}?qty=${qty}`);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      createProductReview(match.params.id, {
+      createProductReview(id, {
         rating,
         comment,
       })
@@ -88,7 +90,7 @@ const ProductScreen = ({ history, match }) => {
                     text={`${product.numReviews} reviews`}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                <ListGroup.Item>Price: €{product.price}</ListGroup.Item>
                 <ListGroup.Item>
                   Production: {product.description}
                 </ListGroup.Item>
@@ -101,7 +103,7 @@ const ProductScreen = ({ history, match }) => {
                     <Row>
                       <Col>Price</Col>
                       <Col>
-                        <strong>${product.price}</strong>
+                        <strong>€{product.price}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -164,7 +166,7 @@ const ProductScreen = ({ history, match }) => {
                   </ListGroup.Item>
                 ))}
                 <ListGroup.Item>
-                  <h2>Write a Costumer Review</h2>
+                  <h2>Write a Customer Review</h2>
                   {errorProductReview && (
                     <Message variant="danger">{errorProductReview}</Message>
                   )}
@@ -189,7 +191,7 @@ const ProductScreen = ({ history, match }) => {
                         <Form.Label>Comment</Form.Label>
                         <Form.Control
                           as="textarea"
-                          row="3"
+                          rows="3"
                           value={comment}
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
@@ -201,7 +203,6 @@ const ProductScreen = ({ history, match }) => {
                   ) : (
                     <Message>
                       Please <Link to="/login">Sign In</Link> to write a review
-                      {""}
                     </Message>
                   )}
                 </ListGroup.Item>

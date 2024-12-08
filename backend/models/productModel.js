@@ -44,10 +44,6 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    category: {
-      type: String,
-      required: true,
-    },
     numReviews: {
       type: Number,
       required: true,

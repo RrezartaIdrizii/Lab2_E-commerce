@@ -1,6 +1,5 @@
 import express from "express";
-const router = express.Router();
-import {
+import { 
   createFormDetails,
   getFormById,
   getAllFormsController,
@@ -9,10 +8,12 @@ import {
 } from "../controllers/contactController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
-router.route("/").post(protect, createFormDetails);
-router.route("/:id").get(protect, getFormById);
-router.route("/").get(getAllFormsController); 
-router.put('/:id', editContact); 
-router.delete('/:id', deleteContact);
+const router = express.Router();
+
+router.route("/").post(createFormDetails); 
+router.route("/:id").get(getFormById);
+router.route("/").get(protect, getAllFormsController); 
+router.put("/:id", protect, editContact); 
+router.delete("/:id", protect, deleteContact); 
 
 export default router;
